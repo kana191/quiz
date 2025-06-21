@@ -92,10 +92,11 @@ private:
     }
 };
 
-WApplication* createApp(const WEnvironment& env) {
-    return new SmartLivingApp(env);
+std::unique_ptr<WApplication> createApp(const WEnvironment& env) {
+    return std::make_unique<SmartLivingApp>(env);
 }
 
 int main(int argc, char **argv) {
-    return WRun(argc, argv, &createApp);
+    return WRun(argc, argv, createApp);
 }
+
