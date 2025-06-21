@@ -18,7 +18,7 @@ RUN wget https://github.com/emweb/wt/archive/refs/tags/4.10.0.zip && \
     cmake -DCMAKE_BUILD_TYPE=Release \
           -DSHARED_LIBS=OFF \
           -DBoost_USE_STATIC_LIBS=OFF \
-          -DENABLE_SSL=ON \
+          -DENABLE_SSL=OFF \
           -DENABLE_JSON=ON \
           -DCMAKE_VERBOSE_MAKEFILE=ON \
           .. && \
@@ -33,8 +33,8 @@ COPY . .
 # Build your app
 RUN g++ -o smart_quiz code.cpp \
     -lwt -lwthttp \
-    -lboost_system -lboost_filesystem -lboost_thread -lboost_program_options \
-    -lssl -lcrypto -pthread
+    -lboost_system -lboost_filesystem -lboost_thread \
+    -pthread
 
 ENV PORT=8080
 EXPOSE 8080
