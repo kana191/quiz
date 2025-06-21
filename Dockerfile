@@ -20,10 +20,16 @@ WORKDIR /app
 COPY . .
 
 # Compile your Wt C++ app
-RUN g++ -o smart_quiz code.cpp \
-    -lwt -lwthttp -lwtjson -lwtssl \
-    -lboost_system -lboost_filesystem -lboost_thread -lboost_program_options \
-    -lssl -lcrypto -pthread
+RUN wget https://github.com/emweb/wt/archive/refs/tags/4.10.0.zip && \
+    unzip 4.10.0.zip && \
+    cd wt-4.10.0 && mkdir build && cd build && \
+    cmake -DCMAKE_BUILD_TYPE=Release \
+          -DSHARED_LIBS=OFF \
+          -DBoost_USE_STATIC_LIBS=OFF \
+          -DENABLE_SSL=ON \
+          -DENABLE_JSON=ON \
+          .. && \
+    make -j4 && make install
 
     
 # Define Railway port
