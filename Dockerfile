@@ -20,8 +20,12 @@ WORKDIR /app
 COPY . .
 
 # Compile your Wt C++ app
-RUN g++ -o smart_quiz code.cpp -lwt -lwthttp -lboost_system -lboost_filesystem -lboost_thread -lssl -lcrypto -pthread
-
+RUN g++ -o smart_quiz code.cpp \
+    -lwt -lwthttp \
+    -lboost_system -lboost_filesystem -lboost_thread \
+    -lboost_program_options \
+    -lssl -lcrypto -pthread
+    
 # Define Railway port
 ENV PORT=8080
 EXPOSE 8080
