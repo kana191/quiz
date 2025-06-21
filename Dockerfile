@@ -8,6 +8,8 @@ RUN apt-get update && apt-get install -y \
     libharfbuzz-dev libglib2.0-dev \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
+
+
 # Build Wt with SSL and JSON support
 WORKDIR /wt
 RUN wget https://github.com/emweb/wt/archive/refs/tags/4.10.0.zip && \
@@ -21,7 +23,8 @@ RUN wget https://github.com/emweb/wt/archive/refs/tags/4.10.0.zip && \
           -DCMAKE_VERBOSE_MAKEFILE=ON \
           .. && \
     make -j2 && make install && \
-    ls -l /usr/local/lib | grep wt  # ✅ Confirm libraries installed
+    ls -l /usr/local/lib | grep wt
+
 
 # Add your app
 WORKDIR /app
@@ -29,7 +32,7 @@ COPY . .
 
 # Build your app
 RUN g++ -o smart_quiz code.cpp \
-    -lwt -lwthttp -lwtjson -lwtssl \
+    -lwt -lwthttp \
     -lboost_system -lboost_filesystem -lboost_thread -lboost_program_options \
     -lssl -lcrypto -pthread
 
