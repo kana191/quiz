@@ -13,6 +13,7 @@ using namespace Wt;
 class SmartLivingApp : public WApplication {
 public:
     SmartLivingApp(const WEnvironment& env) : WApplication(env) {
+        useStyleSheet("style.css");
         setTitle("Smart Living Impact Estimator");
 
         root()->addWidget(std::make_unique<WText>("<h2>🌱 Smart Living Quiz</h2>"));
@@ -30,9 +31,11 @@ public:
         recycles = createInput("Recycle and use public transport? (Y/N):");
 
         auto button = root()->addWidget(std::make_unique<WPushButton>("🚀 Calculate"));
+        button->addStyleClass("submit-button");
         button->clicked().connect(this, &SmartLivingApp::calculate);
 
         result = root()->addWidget(std::make_unique<WText>());
+        result->addStyleClass("result-box");
     }
 
 private:
@@ -43,6 +46,7 @@ private:
     WLineEdit* createInput(const std::string& label) {
         root()->addWidget(std::make_unique<WText>(label));
         auto input = root()->addWidget(std::make_unique<WLineEdit>());
+        input->addStyleClass("input-box");
         root()->addWidget(std::make_unique<WBreak>());
         return input;
     }
