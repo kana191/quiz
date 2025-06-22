@@ -37,4 +37,5 @@ RUN g++ -o smart_quiz code.cpp \
 # Expose and run
 ENV PORT=8080
 EXPOSE 8080
-CMD ["./smart_quiz", "--docroot=.", "--http-address=0.0.0.0", "--http-port=8080"]
+CMD ["./smart_quiz", "--docroot=.", "--http-address=0.0.0.0", "--http-port=8080", "--resources=."]
+
