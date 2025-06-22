@@ -31,7 +31,10 @@ WORKDIR /app
 COPY . .
 
 # Build your app
-RUN g++ -o smart_quiz code.cpp -lwt -lwthttp -lboost_system -lboost_filesystem -lboost_thread -pthread
+RUN g++ -o smart_quiz code.cpp \
+    -lwt -lwthttp \
+    -lboost_system -lboost_filesystem -lboost_thread -lboost_program_options \
+    -pthread
 
 
 ENV PORT=8080
