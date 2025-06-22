@@ -15,7 +15,7 @@ public:
     SmartLivingApp(const WEnvironment& env) : WApplication(env) {
         setTitle("Smart Living Impact Estimator");
 
-        root()->addWidget(std::make_unique<WText>("<h2>🌱 Smart Living Quiz (C++)</h2>"));
+        root()->addWidget(std::make_unique<WText>("<h2>🌱 Smart Living Quiz</h2>"));
 
         name = createInput("Your name:");
         fanHours = createInput("Fan hours/day:");
