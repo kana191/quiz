@@ -10,17 +10,19 @@ RUN apt-get update && apt-get install -y \
 
 
 
-# Build Wt from source (NO SSL/JSON)
+# Build Wt from source (NO SSL/JSON) - with full clean build
 WORKDIR /wt
 RUN wget https://github.com/emweb/wt/archive/refs/tags/4.10.0.zip && \
     unzip 4.10.0.zip && \
-    cd wt-4.10.0 && mkdir build && cd build && \
+    cd wt-4.10.0 && \
+    rm -rf build && mkdir build && cd build && \
     cmake -DCMAKE_BUILD_TYPE=Release \
           -DSHARED_LIBS=OFF \
           -DENABLE_SSL=OFF \
           -DENABLE_JSON=OFF \
           -DBoost_USE_STATIC_LIBS=OFF \
           .. && \
+    make clean && \
     make -j2 && make install
 
 
