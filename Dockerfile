@@ -10,20 +10,18 @@ RUN apt-get update && apt-get install -y \
 
 
 
-# Build Wt with SSL and JSON support
+# Build Wt from source (NO SSL/JSON)
 WORKDIR /wt
 RUN wget https://github.com/emweb/wt/archive/refs/tags/4.10.0.zip && \
     unzip 4.10.0.zip && \
     cd wt-4.10.0 && mkdir build && cd build && \
     cmake -DCMAKE_BUILD_TYPE=Release \
           -DSHARED_LIBS=OFF \
-          -DBoost_USE_STATIC_LIBS=OFF \
           -DENABLE_SSL=OFF \
-          -DENABLE_JSON=ON \
-          -DCMAKE_VERBOSE_MAKEFILE=ON \
+          -DENABLE_JSON=OFF \
+          -DBoost_USE_STATIC_LIBS=OFF \
           .. && \
-    make -j2 && make install && \
-    ls -l /usr/local/lib | grep wt
+    make -j2 && make install
 
 
 # Add your app
@@ -31,10 +29,8 @@ WORKDIR /app
 COPY . .
 
 # Build your app
-RUN g++ -o smart_quiz code.cpp \
-    -lwt -lwthttp \
-    -lboost_system -lboost_filesystem -lboost_thread \
-    -pthread
+RUN g++ -o smart_quiz code.cpp -lwt -lwthttp -lboost_system -lboost_filesystem -lboost_thread -pthread
+
 
 ENV PORT=8080
 EXPOSE 8080
